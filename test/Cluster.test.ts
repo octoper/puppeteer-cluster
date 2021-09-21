@@ -5,6 +5,7 @@ import * as puppeteer from 'puppeteer';
 import * as puppeteerCore from 'puppeteer-core';
 import ConcurrencyImplementation from '../src/concurrency/ConcurrencyImplementation';
 import Browser from '../src/concurrency/built-in/Browser';
+import { hostname } from 'os';
 
 const kill = require('tree-kill');
 
@@ -20,11 +21,11 @@ const concurrencyTypes = [
 
 beforeAll(async () => {
     // test server
-    await new Promise((resolve) => {
+    await new Promise((resolve: any) => {
         testServer = http.createServer((req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end('<html><body>puppeteer-cluster TEST</body></html>');
-        }).listen(3001, '127.0.0.1', resolve);
+        }).listen(3001, "127.0.0.1", resolve);
     });
 });
 
@@ -241,7 +242,7 @@ describe('options', () => {
                     await timeoutExecute(200, (async () => {
                         await cluster.waitForOne(); // should time out!
                     })());
-                } catch (err) {
+                } catch (err: any) {
                     expect(err.message).toMatch(/Timeout/);
                 }
 
@@ -477,7 +478,7 @@ describe('options', () => {
                 try {
                     const value1 = await cluster.execute('executed');
                     expect(1).toBe(2); // fail, should never reach this point
-                } catch (e) {
+                } catch (e: any) {
                     // execute is catched in here
                     expect(e.message).toBe('executed');
                 }
@@ -551,6 +552,7 @@ describe('options', () => {
     test('other puppeteer objects like puppeteer-core', async () => {
         expect.assertions(2);
 
+        // @ts-ignore
         const executablePath = puppeteer.executablePath();
         const cluster = await Cluster.launch({
             concurrency: Cluster.CONCURRENCY_BROWSER,
