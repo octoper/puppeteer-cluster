@@ -3,6 +3,7 @@ data/
 .idea/
 .vscode/
 coverage/
+.package-lock.json
 
 dist/
 
