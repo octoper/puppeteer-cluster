@@ -36,14 +36,14 @@ Install puppeteer (if you don't already have it installed):
 
 Install puppeteer-cluster:
 
-`npm install --save puppeteer-cluster`
+`npm install --save @octoper/puppeteer-cluster`
 
 ## Usage
 
 The following is a typical example of using puppeteer-cluster. A cluster is created with 2 concurrent workers. Then a task is defined which includes going to the URL and taking a screenshot. We then queue two jobs and wait for the cluster to finish.
 
 ```js
-const { Cluster } = require('puppeteer-cluster');
+const { Cluster } = require('@octoper/puppeteer-cluster');
 
 (async () => {
   const cluster = await Cluster.launch({
